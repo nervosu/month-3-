@@ -15,3 +15,44 @@ phoneButton.addEventListener('click', () => {
         phoneResult.style.color = 'red'
     }
 })
+// TAB SLIDER
+const tabContent = document.querySelectorAll('.tab_content_block');
+const tabs = document.querySelectorAll('.tab_content_item');
+const tabsParent = document.querySelector('.tab_content_items');
+const hideTabContent = () => {
+    tabContent.forEach((tabBlock) => {
+        tabBlock.style.display = 'none';
+    });
+    tabs.forEach((tabItem) => {
+        tabItem.classList.remove('tab_content_item_active');
+    });
+};
+
+const showTabContent = (indexElement = 0) => {
+    tabContent[indexElement].style.display = 'block';
+    tabs[indexElement].classList.add('tab_content_item_active');
+};
+
+let currentIndex = 0;
+
+const nextSlide = () => {
+    currentIndex = (currentIndex + 1) % tabs.length;
+    hideTabContent();
+    showTabContent(currentIndex);
+};
+
+hideTabContent();
+showTabContent(0);
+
+tabsParent.onclick = (event) => {
+    if (event.target.classList.contains('tab_content_item')) {
+        tabs.forEach((tabItem, tabIndex) => {
+            if (event.target === tabItem) {
+                currentIndex = tabIndex;
+                hideTabContent();
+                showTabContent(currentIndex);
+            }
+        });
+    }
+};
+setInterval(nextSlide, 3000);
